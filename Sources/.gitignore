@@ -1,0 +1,9 @@
+# Ignoring bin and obj folders.
+
+bin
+obj
+
+# Ignoring user files.
+
+*.user
+*.suo
