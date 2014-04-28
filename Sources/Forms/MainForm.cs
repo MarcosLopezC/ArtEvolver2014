@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ArtEvolver
+namespace ArtEvolver.Forms
 {
 	public partial class MainForm : Form
 	{

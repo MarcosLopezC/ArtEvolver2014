@@ -1,4 +1,4 @@
-﻿namespace ArtEvolver
+﻿namespace ArtEvolver.Forms
 {
 	partial class MainForm
 	{
