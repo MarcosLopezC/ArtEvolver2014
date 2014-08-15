@@ -1,14 +1,12 @@
 ﻿using System;
 
-namespace ArtEvolver
+namespace ArtEvolver.VirtualMachine
 {
 	public class Stack
 	{
-		public const int MaxSize = 1000;
-
-		private const int MaxIndex = MaxSize - 1;
-
 		private const double DefaultValue = 0.0;
+
+		private readonly int maxIndex;
 
 		private int index = 0;
 
@@ -24,16 +22,29 @@ namespace ArtEvolver
 			get { return index; }
 		}
 
-		public Stack()
+		public int Capacity
 		{
-			values = new double[MaxSize];
+			get { return values.Length; }
+		}
+
+		public Stack() : this(1000) { }
+
+		public Stack(int capacity)
+		{
+			if (capacity < 1)
+			{
+				throw new ArgumentOutOfRangeException("capacity", "Capacity has to be greater than 1.");
+			}
+
+			values = new double[capacity];
+			maxIndex = capacity - 1;
 		}
 
 		public void Push(double value)
 		{
 			values[index] = value;
 
-			if (index < MaxIndex)
+			if (index < maxIndex)
 			{
 				index += 1;
 			}
