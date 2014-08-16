@@ -8,18 +8,13 @@ namespace ArtEvolver.VirtualMachine
 
 		private readonly int maxIndex;
 
-		private int index = 0;
+		private int index = -1;
 
 		private double[] values;
 
-		public double Top
-		{
-			get { return Peek(); }
-		}
-
 		public int Count
 		{
-			get { return index; }
+			get { return index + 1; }
 		}
 
 		public int Capacity
@@ -42,21 +37,23 @@ namespace ArtEvolver.VirtualMachine
 
 		public void Push(double value)
 		{
-			values[index] = value;
-
 			if (index < maxIndex)
 			{
 				index += 1;
 			}
+
+			values[index] = value;
 		}
 
 		public double Pop()
 		{
-			if (index > 0)
+			if (index >= 0)
 			{
+				var value = values[index];
+
 				index -= 1;
 
-				return values[index];
+				return value;
 			}
 			else
 			{
@@ -66,9 +63,9 @@ namespace ArtEvolver.VirtualMachine
 
 		public double Peek()
 		{
-			if (index > 0)
+			if (index >= 0)
 			{
-				return values[index - 1];
+				return values[index];
 			}
 			else
 			{
@@ -78,12 +75,12 @@ namespace ArtEvolver.VirtualMachine
 
 		public void Clear()
 		{
-			index = 0;
+			index = -1;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("Top = {0} Count = {1}", Top, Count);
+			return string.Format("Top = {0}; Count = {1}", Peek(), Count);
 		}
 	}
 }
