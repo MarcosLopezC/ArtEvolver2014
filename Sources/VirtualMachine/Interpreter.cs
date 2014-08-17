@@ -5,36 +5,23 @@ using System.Text;
 
 namespace ArtEvolver.VirtualMachine
 {
-	public class Interpreter
+	public static class Interpreter
 	{
-		private Stack stack;
-
-		private double accumulator;
-
-		private int dataIndex;
-
-		public Interpreter()
-		{
-			stack       = new Stack();
-			accumulator = 0;
-			dataIndex   = 0;
-		}
-
-		private void Reset()
-		{
-			stack.Clear();
-			accumulator = 0;
-			dataIndex   = 0;
-		}
-
-		public double Execute(Program program, double x, double y)
+		public static double Execute(Program program, double x, double y)
 		{
 			if (program == null)
 			{
 				throw new ArgumentNullException();
 			}
 
-			Reset();
+			if (program.StackSize < 1)
+			{
+				throw new ArgumentOutOfRangeException("StackSize must be greater than 1.");
+			}
+
+			var stack          = new Stack(program.StackSize);
+			double accumulator = 0;
+			int dataIndex      = 0;
 
 			for (int i = 0; i < program.Operations.Count; i += 1)
 			{
