@@ -157,14 +157,6 @@ namespace ArtEvolver.VirtualMachine
 						accumulator = data[dataIndex];
 						break;
 
-					case Operation.GetPi:
-						accumulator = Math.PI;
-						break;
-
-					case Operation.GetE:
-						accumulator = Math.E;
-						break;
-
 					case Operation.IncrementIndex:
 						dataIndex = Math.Min(data.Count - 1, dataIndex + 1);
 						break;

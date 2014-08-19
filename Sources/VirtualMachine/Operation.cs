@@ -46,8 +46,6 @@ namespace ArtEvolver.VirtualMachine
 		GetX,
 		GetY,
 		GetData,
-		GetPi,
-		GetE,
 
 		IncrementIndex,
 		DecrementIndex,
