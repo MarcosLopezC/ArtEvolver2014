@@ -49,7 +49,20 @@ namespace ArtEvolver.VirtualMachine
 		GetPi,
 		GetE,
 
-		Next,
-		Previous,
+		IncrementIndex,
+		DecrementIndex,
+
+		And,
+		Or,
+		Xor,
+		Not,
+
+		GreaterThan,
+		LessThan,
+		EqualTo,
+
+		If,
+		Else,
+		EndIf,
 	}
 }

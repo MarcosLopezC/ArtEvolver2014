@@ -7,6 +7,9 @@ namespace ArtEvolver.VirtualMachine
 {
 	public static class Interpreter
 	{
+		private const double TrueValue = 1;
+		private const double FalseValue = 0;
+
 		public static double Execute(Program program, double x, double y)
 		{
 			if (program == null)
@@ -19,13 +22,16 @@ namespace ArtEvolver.VirtualMachine
 				throw new ArgumentOutOfRangeException("StackSize must be greater than 1.");
 			}
 
+			var operations = program.Operations;
+			var data       = program.Data.Count > 0 ? program.Data : new double[] {0.0};
+
 			var stack          = new Stack(program.StackSize);
 			double accumulator = 0;
 			int dataIndex      = 0;
 
-			for (int i = 0; i < program.Operations.Count; i += 1)
+			for (int i = 0; i < operations.Count; i += 1)
 			{
-				switch (program.Operations[i])
+				switch (operations[i])
 				{
 					case Operation.Add:
 						accumulator += stack.Pop();
@@ -148,7 +154,7 @@ namespace ArtEvolver.VirtualMachine
 						break;
 
 					case Operation.GetData:
-						accumulator = program.Data[dataIndex];
+						accumulator = data[dataIndex];
 						break;
 
 					case Operation.GetPi:
@@ -159,12 +165,55 @@ namespace ArtEvolver.VirtualMachine
 						accumulator = Math.E;
 						break;
 
-					case Operation.Next:
-						dataIndex = Math.Min(program.Data.Count, dataIndex + 1);
+					case Operation.IncrementIndex:
+						dataIndex = Math.Min(data.Count - 1, dataIndex + 1);
 						break;
 
-					case Operation.Previous:
+					case Operation.DecrementIndex:
 						dataIndex = Math.Max(0, dataIndex - 1);
+						break;
+
+					case Operation.And:
+						SetBoolean(ref accumulator, ToBoolean(accumulator) & ToBoolean(stack.Pop()));
+						break;
+
+					case Operation.Or:
+						SetBoolean(ref accumulator, ToBoolean(accumulator) | ToBoolean(stack.Pop()));
+						break;
+
+					case Operation.Xor:
+						SetBoolean(ref accumulator, ToBoolean(accumulator) ^ ToBoolean(stack.Pop()));
+						break;
+
+					case Operation.Not:
+						SetBoolean(ref accumulator, !ToBoolean(accumulator));
+						break;
+
+					case Operation.GreaterThan:
+						SetBoolean(ref accumulator, accumulator > stack.Pop());
+						break;
+
+					case Operation.LessThan:
+						SetBoolean(ref accumulator, accumulator < stack.Pop());
+						break;
+
+					case Operation.EqualTo:
+						SetBoolean(ref accumulator, accumulator == stack.Pop());
+						break;
+
+					case Operation.If:
+						if (ToBoolean(accumulator) == false)
+						{
+							i = Skip(program, i);
+						}
+						break;
+
+					case Operation.Else:
+						i = Skip(program, i);
+						break;
+
+					case Operation.EndIf:
+						// Does nothing. It's just a marker.
 						break;
 
 					default:
@@ -173,6 +222,50 @@ namespace ArtEvolver.VirtualMachine
 			}
 
 			return accumulator;
+		}
+
+		private static bool ToBoolean(double value)
+		{
+			if (value == FalseValue)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		private static void SetBoolean(ref double variable, bool value)
+		{
+			variable = value ? TrueValue : FalseValue;
+		}
+
+		private static int Skip(Program program, int index)
+		{
+			var operations = program.Operations;
+
+			index += 1;
+
+			while (index < operations.Count)
+			{
+				switch (operations[index])
+				{
+					case Operation.If:
+						index = Skip(program, index) + 1;
+						break;
+
+					case Operation.Else:
+					case Operation.EndIf:
+						return index;
+
+					default:
+						index += 1;
+						break;
+				}
+			}
+
+			return index;
 		}
 	}
 }
