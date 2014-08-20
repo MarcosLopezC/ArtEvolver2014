@@ -141,8 +141,18 @@ namespace ArtEvolver.VirtualMachine
 						stack.Push(accumulator);
 						break;
 
-					case Operation.Clear:
+					case Operation.ClearAccumulator:
 						accumulator = 0;
+						break;
+
+					case Operation.ClearStack:
+						stack.Clear();
+						break;
+
+					case Operation.Swap:
+						var temp = stack.Pop();
+						stack.Push(accumulator);
+						accumulator = temp;
 						break;
 
 					case Operation.GetX:

@@ -41,7 +41,10 @@ namespace ArtEvolver.VirtualMachine
 		Pop,
 		Push,
 
-		Clear,
+		ClearAccumulator,
+		ClearStack,
+
+		Swap,
 
 		GetX,
 		GetY,
