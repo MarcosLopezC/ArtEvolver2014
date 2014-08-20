@@ -22,8 +22,6 @@ namespace ArtEvolver.VirtualMachine
 			get { return values.Length; }
 		}
 
-		public Stack() : this(1000) { }
-
 		public Stack(int capacity)
 		{
 			if (capacity < 1)
