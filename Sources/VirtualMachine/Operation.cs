@@ -50,6 +50,7 @@ namespace ArtEvolver.VirtualMachine
 		GetY,
 		GetData,
 
+		ResetIndex,
 		IncrementIndex,
 		DecrementIndex,
 

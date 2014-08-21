@@ -167,6 +167,10 @@ namespace ArtEvolver.VirtualMachine
 						accumulator = data[dataIndex];
 						break;
 
+					case Operation.ResetIndex:
+						dataIndex = minDataIndex;
+						break;
+
 					case Operation.IncrementIndex:
 						dataIndex = Math.Min(data.Count - 1, dataIndex + 1);
 						break;
