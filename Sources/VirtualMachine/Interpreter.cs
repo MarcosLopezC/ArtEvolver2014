@@ -7,7 +7,7 @@ namespace ArtEvolver.VirtualMachine
 {
 	public static class Interpreter
 	{
-		private const double TrueValue = 1;
+		private const double TrueValue  = 1;
 		private const double FalseValue = 0;
 
 		public static double Execute(Program program, double x, double y)
@@ -24,6 +24,9 @@ namespace ArtEvolver.VirtualMachine
 
 			var operations = program.Operations;
 			var data       = program.Data.Count > 0 ? program.Data : new double[] {0.0};
+
+			int minDataIndex = 0;
+			int maxDataIndex = data.Count - 1;
 
 			var stack          = new Stack(program.StackSize);
 			double accumulator = 0;
@@ -172,11 +175,11 @@ namespace ArtEvolver.VirtualMachine
 						break;
 
 					case Operation.IncrementIndex:
-						dataIndex = Math.Min(data.Count - 1, dataIndex + 1);
+						dataIndex = Math.Min(maxDataIndex, dataIndex + 1);
 						break;
 
 					case Operation.DecrementIndex:
-						dataIndex = Math.Max(0, dataIndex - 1);
+						dataIndex = Math.Max(minDataIndex, dataIndex - 1);
 						break;
 
 					case Operation.And:
