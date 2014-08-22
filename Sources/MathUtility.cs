@@ -34,5 +34,15 @@ namespace ArtEvolver
 		{
 			return Math.Min(Math.Max(value, min), max);
 		}
+
+		public static double Mod(double dividend, double divisor)
+		{
+			return dividend - (divisor * Math.Floor(dividend / divisor));
+		}
+
+		public static int Mod(int dividend, int divisor)
+		{
+			return dividend - (divisor * (int)Math.Floor((double)dividend / divisor));
+		}
 	}
 }
