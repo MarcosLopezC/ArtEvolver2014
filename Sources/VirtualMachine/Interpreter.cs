@@ -254,9 +254,7 @@ namespace ArtEvolver.VirtualMachine
 		{
 			var operations = program.Operations;
 
-			index += 1;
-
-			while (index < operations.Count)
+			for (index += 1; index < operations.Count; index += 1)
 			{
 				switch (operations[index])
 				{
@@ -267,14 +265,10 @@ namespace ArtEvolver.VirtualMachine
 					case Operation.Else:
 					case Operation.EndIf:
 						return index;
-
-					default:
-						index += 1;
-						break;
 				}
 			}
 
-			return index;
+			return operations.Count - 2;
 		}
 	}
 }
