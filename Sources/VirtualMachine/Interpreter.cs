@@ -53,11 +53,11 @@ namespace ArtEvolver.VirtualMachine
 						break;
 
 					case Operation.Modulus:
-						accumulator %= stack.Pop();
+						accumulator = MathUtility.Mod(accumulator, stack.Pop());
 						break;
 
 					case Operation.Remainder:
-						accumulator = Math.IEEERemainder(accumulator, stack.Pop());
+						accumulator %= stack.Pop();
 						break;
 
 					case Operation.AbsoluteValue:
