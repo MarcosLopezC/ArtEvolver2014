@@ -44,5 +44,23 @@ namespace ArtEvolver
 		{
 			return dividend - (divisor * (int)Math.Floor((double)dividend / divisor));
 		}
+
+		public static double TriangularMod(double dividend, double divisor)
+		{
+			var period = divisor * 2;
+
+			var mod = Mod(dividend, period);
+
+			return mod <= divisor ? mod : period - mod;
+		}
+
+		public static int TriangularMod(int dividend, int divisor)
+		{
+			var period = divisor * 2;
+
+			var mod = Mod(dividend, period);
+
+			return mod <= divisor ? mod : period - mod;
+		}
 	}
 }
