@@ -10,6 +10,8 @@ namespace ArtEvolver.VirtualMachine
 		private const double TrueValue  = 1;
 		private const double FalseValue = 0;
 
+		private static readonly double[] EmptyData = new double[] {0};
+
 		public static double Execute(Program program, double x, double y)
 		{
 			if (program == null)
@@ -23,7 +25,7 @@ namespace ArtEvolver.VirtualMachine
 			}
 
 			var operations = program.Operations;
-			var data       = program.Data.Count > 0 ? program.Data : new double[] {0.0};
+			var data       = program.Data.Count > 0 ? program.Data : EmptyData;
 
 			int minDataIndex = 0;
 			int maxDataIndex = data.Count - 1;
