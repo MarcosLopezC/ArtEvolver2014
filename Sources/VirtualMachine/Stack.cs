@@ -4,11 +4,13 @@ namespace ArtEvolver.VirtualMachine
 {
 	public class Stack
 	{
-		private const double DefaultValue = 0.0;
+		private const int InitialIndex = -1;
+
+		private const double DefaultValue = 0;
 
 		private readonly int maxIndex;
 
-		private int index = -1;
+		private int index = InitialIndex;
 
 		private double[] values;
 
@@ -73,7 +75,7 @@ namespace ArtEvolver.VirtualMachine
 
 		public void Clear()
 		{
-			index = -1;
+			index = InitialIndex;
 		}
 
 		public override string ToString()
