@@ -8,8 +8,8 @@ namespace ArtEvolver.VirtualMachine
 {
 	public static class Interpreter
 	{
-		private const double TrueValue  = 1;
-		private const double FalseValue = 0;
+		private const double TruthyValue = 1;
+		private const double FalsyValue  = 0;
 
 		private static readonly double[] EmptyData = new double[] {0};
 
@@ -186,35 +186,49 @@ namespace ArtEvolver.VirtualMachine
 						break;
 
 					case Operation.And:
-						SetBoolean(ref accumulator, ToBoolean(accumulator) & ToBoolean(stack.Pop()));
+						if (IsTruthy(accumulator))
+						{
+							accumulator = stack.Pop();
+						}
+						else
+						{
+							stack.Pop();
+						}
 						break;
 
 					case Operation.Or:
-						SetBoolean(ref accumulator, ToBoolean(accumulator) | ToBoolean(stack.Pop()));
+						if (!IsTruthy(accumulator))
+						{
+							accumulator = stack.Pop();
+						}
+						else
+						{
+							stack.Pop();
+						}
 						break;
 
 					case Operation.Xor:
-						SetBoolean(ref accumulator, ToBoolean(accumulator) ^ ToBoolean(stack.Pop()));
+						accumulator = IsTruthy(accumulator) ^ IsTruthy(stack.Pop()) ? TruthyValue : FalsyValue;
 						break;
 
 					case Operation.Not:
-						SetBoolean(ref accumulator, !ToBoolean(accumulator));
+						accumulator = IsTruthy(accumulator) ? FalsyValue : TruthyValue;
 						break;
 
 					case Operation.GreaterThan:
-						SetBoolean(ref accumulator, accumulator > stack.Pop());
+						accumulator = accumulator > stack.Pop() ? TruthyValue : FalsyValue;
 						break;
 
 					case Operation.LessThan:
-						SetBoolean(ref accumulator, accumulator < stack.Pop());
+						accumulator = accumulator < stack.Pop() ? TruthyValue : FalsyValue;
 						break;
 
 					case Operation.EqualTo:
-						SetBoolean(ref accumulator, accumulator == stack.Pop());
+						accumulator = accumulator == stack.Pop() ? TruthyValue : FalsyValue;
 						break;
 
 					case Operation.If:
-						if (ToBoolean(accumulator) == false)
+						if (!IsTruthy(accumulator))
 						{
 							i = Skip(program, i);
 						}
@@ -284,21 +298,9 @@ namespace ArtEvolver.VirtualMachine
 			}
 		}
 
-		private static bool ToBoolean(double value)
+		private static bool IsTruthy(double value)
 		{
-			if (value == FalseValue)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-
-		private static void SetBoolean(ref double variable, bool value)
-		{
-			variable = value ? TrueValue : FalseValue;
+			return value == FalsyValue ? false : true;
 		}
 
 		private static int Skip(Program program, int index)
