@@ -55,6 +55,7 @@
     <Compile Include="MathUtility.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\Region.cs" />
     <Compile Include="Rendering\Color.cs" />
     <Compile Include="VirtualMachine\Operation.cs" />
     <Compile Include="VirtualMachine\Program.cs" />
