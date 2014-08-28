@@ -54,12 +54,17 @@ namespace ArtEvolver.VirtualMachine
 
 		public double GetValueAt(int x, int y)
 		{
-			return data[x + (Width * y)];
+			return data[GetIndex(x, y)];
 		}
 
 		public void SetValueAt(int x, int y, double value)
 		{
-			data[x + (Width * y)] = value;
+			data[GetIndex(x, y)] = value;
+		}
+
+		private int GetIndex(int x, int y)
+		{
+			return x + (Width * y);
 		}
 	}
 }
