@@ -321,7 +321,7 @@ namespace ArtEvolver.VirtualMachine
 				}
 			}
 
-			return operations.Count - 2;
+			return operations.Count - 1;
 		}
 	}
 }
