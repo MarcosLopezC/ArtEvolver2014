@@ -37,7 +37,7 @@ namespace ArtEvolver.Rendering
 			const double High = 1;
 			const double Low  = 0;
 
-			var rising  = (hue - sector);
+			var rising  = hue - sector;
 			var falling = 1 - rising;
 
 			switch (sector)
