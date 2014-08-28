@@ -35,7 +35,7 @@ namespace ArtEvolver.VirtualMachine
 			double accumulator = 0;
 			int dataIndex      = 0;
 
-			for (int i = 0; i < operations.Count; i += 1)
+			for (var i = 0; i < operations.Count; i += 1)
 			{
 				switch (operations[i])
 				{
