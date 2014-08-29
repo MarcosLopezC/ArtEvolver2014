@@ -43,7 +43,7 @@ namespace ArtEvolver.VirtualMachine
 						accumulator += stack.Pop();
 						break;
 
-					case Operation.Substract:
+					case Operation.Subtract:
 						accumulator -= stack.Pop();
 						break;
 

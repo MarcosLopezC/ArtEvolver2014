@@ -8,7 +8,7 @@ namespace ArtEvolver.VirtualMachine
 	public enum Operation : byte
 	{
 		Add,
-		Substract,
+		Subtract,
 		Multiply,
 		Divide,
 		Modulus,
