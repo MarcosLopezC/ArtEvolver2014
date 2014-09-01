@@ -29,8 +29,10 @@ namespace ArtEvolver.Rendering
 
 		public static Color FromHue(double hue)
 		{
-			// Mapping hue's range from [0, 1) to [0, 6), for convenience. 
-			hue = MathUtility.Mod(hue, 1) * 6;
+			if (hue < 0 || hue >= 6)
+			{
+				throw new ArgumentOutOfRangeException("hue", hue, "Hue must be between 0 and 6.");
+			}
 
 			var sector = (int)(hue);
 
@@ -67,6 +69,16 @@ namespace ArtEvolver.Rendering
 
 		public static Color FromHsb(double hue, double saturation, double brightness)
 		{
+			if (saturation < 0 || saturation > 1)
+			{
+				throw new ArgumentOutOfRangeException("saturation", saturation, "Saturation must be between 0 and 1.");
+			}
+
+			if (brightness < 0 || brightness > 1)
+			{
+				throw new ArgumentOutOfRangeException("brightness", brightness, "Brightness must be between 0 and 1.");
+			}
+
 			var complement = 1 - saturation;
 
 			// Get pure hue.
