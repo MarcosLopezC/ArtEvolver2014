@@ -62,5 +62,10 @@ namespace ArtEvolver
 
 			return mod <= divisor ? mod : period - mod;
 		}
+
+		public static bool IsNumber(double value)
+		{
+			return !(double.IsNaN(value) || double.IsInfinity(value));
+		}
 	}
 }
