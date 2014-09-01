@@ -38,12 +38,12 @@ namespace ArtEvolver.VirtualMachine
 		{
 			if (width < 0)
 			{
-				throw new ArgumentOutOfRangeException("width", "Width must be greater than 0.");
+				throw new ArgumentOutOfRangeException("width", width, "Width must be greater than 0.");
 			}
 
 			if (height < 0)
 			{
-				throw new ArgumentOutOfRangeException("height", "Height must be greater than 0.");
+				throw new ArgumentOutOfRangeException("height", height, "Height must be greater than 0.");
 			}
 
 			this.Width  = width;
