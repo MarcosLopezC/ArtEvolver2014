@@ -7,7 +7,7 @@ namespace ArtEvolver.Rendering
 {
 	public struct Color
 	{
-		private const byte Max = byte.MaxValue;
+		private const byte MaxValue = byte.MaxValue;
 
 		public byte Red   { get; set; }
 		public byte Green { get; set; }
@@ -22,9 +22,9 @@ namespace ArtEvolver.Rendering
 
 		public Color(double red, double green, double blue) : this()
 		{
-			this.Red   = (byte)(red   * Max);
-			this.Green = (byte)(green * Max);
-			this.Blue  = (byte)(blue  * Max);
+			this.Red   = (byte)(red   * MaxValue);
+			this.Green = (byte)(green * MaxValue);
+			this.Blue  = (byte)(blue  * MaxValue);
 		}
 
 		public static Color FromHue(double hue)
@@ -85,9 +85,9 @@ namespace ArtEvolver.Rendering
 			var color = FromHue(hue);
 
 			// Apply saturation.
-			color.Red   += (byte)(complement * (Max - color.Red));
-			color.Green += (byte)(complement * (Max - color.Green));
-			color.Blue  += (byte)(complement * (Max - color.Blue));
+			color.Red   += (byte)(complement * (MaxValue - color.Red));
+			color.Green += (byte)(complement * (MaxValue - color.Green));
+			color.Blue  += (byte)(complement * (MaxValue - color.Blue));
 
 			// Apply brightness.
 			color.Red   = (byte)(color.Red   * brightness);
