@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArtEvolver.Extensions;
 
 namespace ArtEvolver.Rendering
 {
 	public struct Color
 	{
 		private const byte MaxValue = byte.MaxValue;
+
+		private static readonly Color White = new Color(MaxValue, MaxValue, MaxValue);
 
 		public byte Red   { get; set; }
 		public byte Green { get; set; }
@@ -29,6 +32,11 @@ namespace ArtEvolver.Rendering
 
 		public static Color FromHue(double hue)
 		{
+			if (hue.IsNaN())
+			{
+				return White;
+			}
+
 			if (hue < 0 || hue >= 6)
 			{
 				throw new ArgumentOutOfRangeException("hue", hue, "Hue must be between 0 and 6.");
