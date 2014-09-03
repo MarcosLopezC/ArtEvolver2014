@@ -8,93 +8,13 @@ namespace ArtEvolver.Rendering
 {
 	public struct RgbColor
 	{
-		private const byte MaxValue = byte.MaxValue;
+		public const byte MaxValue = byte.MaxValue;
 
 		private static readonly RgbColor White = new RgbColor(MaxValue, MaxValue, MaxValue);
-
-		public const double MaxHue        = 6;
-		public const double MaxSaturation = 1;
-		public const double MaxBrightness = 1;
 
 		public byte Red   { get; set; }
 		public byte Green { get; set; }
 		public byte Blue  { get; set; }
-
-		public double Hue
-		{
-			get
-			{
-				var red   = (double)(Red)   / MaxValue;
-				var green = (double)(Green) / MaxValue;
-				var blue  = (double)(Blue)  / MaxValue;
-
-				var max = Max(red, green, blue);
-				var min = Min(red, green, blue);
-
-				var delta = max - min;
-
-				if (max == red)
-				{
-					return MathUtility.Mod((green - blue) / delta, 6);
-				}
-				else if (max == green)
-				{
-					return ((blue - red) / delta) + 2;
-				}
-				else // if (max == blue)
-				{
-					return ((red - green) / delta) + 4;
-				}
-			}
-			set
-			{
-				this = FromHsb(value, Saturation, Brightness);
-			}
-		}
-
-		public double Saturation
-		{
-			get
-			{
-				var red   = (double)(Red)   / MaxValue;
-				var green = (double)(Green) / MaxValue;
-				var blue  = (double)(Blue)  / MaxValue;
-
-				var max = Max(red, green, blue);
-				var min = Min(red, green, blue);
-
-				var delta = max - min;
-
-				if (delta == 0)
-				{
-					return 0;
-				}
-				else
-				{
-					return delta / max;
-				}
-			}
-			set
-			{
-				this = FromHsb(Hue, value, Brightness);
-			}
-		}
-
-		public double Brightness
-		{
-			get
-			{
-				var red   = (double)(Red)   / MaxValue;
-				var green = (double)(Green) / MaxValue;
-				var blue  = (double)(Blue)  / MaxValue;
-
-				return Max(red, green, blue);
-			}
-			set
-			{
-				this = FromHsb(Hue, Saturation, value);
-			}
-		}
 
 		public RgbColor(byte red, byte green, byte blue) : this()
 		{
@@ -103,11 +23,54 @@ namespace ArtEvolver.Rendering
 			this.Blue  = blue;
 		}
 
-		public RgbColor(double red, double green, double blue) : this()
+		private RgbColor(double red, double green, double blue) : this()
 		{
 			this.Red   = (byte)(red   * MaxValue);
 			this.Green = (byte)(green * MaxValue);
 			this.Blue  = (byte)(blue  * MaxValue);
+		}
+
+		public HsbColor ToHsbColor()
+		{
+			var Hsb = new HsbColor();
+
+			var red   = (double)(Red)   / MaxValue;
+			var green = (double)(Green) / MaxValue;
+			var blue  = (double)(Blue)  / MaxValue;
+
+			var max = Max(red, green, blue);
+			var min = Min(red, green, blue);
+
+			var delta = max - min;
+
+			// Set hue.
+			if (max == red)
+			{
+				Hsb.Hue =  MathUtility.Mod((green - blue) / delta, 6);
+			}
+			else if (max == green)
+			{
+				Hsb.Hue = ((blue - red) / delta) + 2;
+			}
+			else // if (max == blue)
+			{
+				Hsb.Hue = ((red - green) / delta) + 4;
+			}
+
+			// Set saturation.
+			if (delta == 0)
+			{
+				Hsb.Saturation = 0;
+			}
+			else
+			{
+				Hsb.Saturation = delta / max;
+			}
+
+			// Set brightness.
+			Hsb.Brightness = max;
+
+			return Hsb;
 		}
 
 		public static RgbColor FromHue(double hue)
@@ -117,7 +80,7 @@ namespace ArtEvolver.Rendering
 				return White;
 			}
 
-			if (hue < 0 || hue >= 6)
+			if (hue < 0 || hue >= HsbColor.MaxHue)
 			{
 				throw new ArgumentOutOfRangeException("hue", hue, "Hue must be between 0 and 6.");
 			}
@@ -157,12 +120,12 @@ namespace ArtEvolver.Rendering
 
 		public static RgbColor FromHsb(double hue, double saturation, double brightness)
 		{
-			if (saturation < 0 || saturation > 1)
+			if (saturation < 0 || saturation > HsbColor.MaxSaturation)
 			{
 				throw new ArgumentOutOfRangeException("saturation", saturation, "Saturation must be between 0 and 1.");
 			}
 
-			if (brightness < 0 || brightness > 1)
+			if (brightness < 0 || brightness > HsbColor.MaxBrightness)
 			{
 				throw new ArgumentOutOfRangeException("brightness", brightness, "Brightness must be between 0 and 1.");
 			}
@@ -185,14 +148,14 @@ namespace ArtEvolver.Rendering
 			return color;
 		}
 
-		private static double Max(double a, double b, double c)
-		{
-			return Math.Max(a, Math.Max(b, c));
-		}
-
 		private static double Min(double a, double b, double c)
 		{
 			return Math.Min(a, Math.Min(b, c));
+		}
+
+		private static double Max(double a, double b, double c)
+		{
+			return Math.Max(a, Math.Max(b, c));
 		}
 
 		public override string ToString()

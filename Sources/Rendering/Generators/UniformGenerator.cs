@@ -34,9 +34,9 @@ namespace ArtEvolver.Rendering.Generators
 			if (value.IsNumber())
 			{
 				return RgbColor.FromHsb(
-					MathUtility.Mod(HueOffset + HueScale * value, RgbColor.MaxHue),
-					MathUtility.TriangularMod(SaturationOffset + SaturationScale * value, RgbColor.MaxSaturation),
-					MathUtility.TriangularMod(BrightnessOffset + BrightnessScale * value, RgbColor.MaxBrightness)
+					MathUtility.Mod(HueOffset + HueScale * value, HsbColor.MaxHue),
+					MathUtility.TriangularMod(SaturationOffset + SaturationScale * value, HsbColor.MaxSaturation),
+					MathUtility.TriangularMod(BrightnessOffset + BrightnessScale * value, HsbColor.MaxBrightness)
 				);
 			}
 			else

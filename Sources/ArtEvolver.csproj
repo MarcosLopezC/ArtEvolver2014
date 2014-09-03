@@ -59,6 +59,7 @@
     <Compile Include="Rendering\BitmapGenerator.cs" />
     <Compile Include="Rendering\Generators\IColorGenerator.cs" />
     <Compile Include="Rendering\Generators\UniformGenerator.cs" />
+    <Compile Include="Rendering\HsbColor.cs" />
     <Compile Include="Rendering\Region.cs" />
     <Compile Include="Rendering\RgbColor.cs" />
     <Compile Include="VirtualMachine\DataContainer.cs" />
