@@ -12,9 +12,89 @@ namespace ArtEvolver.Rendering
 
 		private static readonly Color White = new Color(MaxValue, MaxValue, MaxValue);
 
+		public const double MaxHue        = 6;
+		public const double MaxSaturation = 1;
+		public const double MaxBrightness = 1;
+
 		public byte Red   { get; set; }
 		public byte Green { get; set; }
 		public byte Blue  { get; set; }
+
+		public double Hue
+		{
+			get
+			{
+				var red   = (double)(Red)   / MaxValue;
+				var green = (double)(Green) / MaxValue;
+				var blue  = (double)(Blue)  / MaxValue;
+
+				var max = Max(red, green, blue);
+				var min = Min(red, green, blue);
+
+				var delta = max - min;
+
+				if (max == red)
+				{
+					return MathUtility.Mod((green - blue) / delta, 6);
+				}
+				else if (max == green)
+				{
+					return ((blue - red) / delta) + 2;
+				}
+				else // if (max == blue)
+				{
+					return ((red - green) / delta) + 4;
+				}
+			}
+			set
+			{
+				this = FromHsb(value, Saturation, Brightness);
+			}
+		}
+
+		public double Saturation
+		{
+			get
+			{
+				var red   = (double)(Red)   / MaxValue;
+				var green = (double)(Green) / MaxValue;
+				var blue  = (double)(Blue)  / MaxValue;
+
+				var max = Max(red, green, blue);
+				var min = Min(red, green, blue);
+
+				var delta = max - min;
+
+				if (delta == 0)
+				{
+					return 0;
+				}
+				else
+				{
+					return delta / max;
+				}
+			}
+			set
+			{
+				this = FromHsb(Hue, value, Brightness);
+			}
+		}
+
+		public double Brightness
+		{
+			get
+			{
+				var red   = (double)(Red)   / MaxValue;
+				var green = (double)(Green) / MaxValue;
+				var blue  = (double)(Blue)  / MaxValue;
+
+				return Max(red, green, blue);
+			}
+			set
+			{
+				this = FromHsb(Hue, Saturation, value);
+			}
+		}
 
 		public Color(byte red, byte green, byte blue) : this()
 		{
@@ -103,6 +183,16 @@ namespace ArtEvolver.Rendering
 			color.Blue  = (byte)(color.Blue  * brightness);
 
 			return color;
+		}
+
+		private static double Max(double a, double b, double c)
+		{
+			return Math.Max(a, Math.Max(b, c));
+		}
+
+		private static double Min(double a, double b, double c)
+		{
+			return Math.Min(a, Math.Min(b, c));
 		}
 
 		public override string ToString()
