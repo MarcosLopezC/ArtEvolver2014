@@ -6,11 +6,11 @@ using ArtEvolver.Extensions;
 
 namespace ArtEvolver.Rendering
 {
-	public struct Color
+	public struct RgbColor
 	{
 		private const byte MaxValue = byte.MaxValue;
 
-		private static readonly Color White = new Color(MaxValue, MaxValue, MaxValue);
+		private static readonly RgbColor White = new RgbColor(MaxValue, MaxValue, MaxValue);
 
 		public const double MaxHue        = 6;
 		public const double MaxSaturation = 1;
@@ -96,21 +96,21 @@ namespace ArtEvolver.Rendering
 			}
 		}
 
-		public Color(byte red, byte green, byte blue) : this()
+		public RgbColor(byte red, byte green, byte blue) : this()
 		{
 			this.Red   = red;
 			this.Green = green;
 			this.Blue  = blue;
 		}
 
-		public Color(double red, double green, double blue) : this()
+		public RgbColor(double red, double green, double blue) : this()
 		{
 			this.Red   = (byte)(red   * MaxValue);
 			this.Green = (byte)(green * MaxValue);
 			this.Blue  = (byte)(blue  * MaxValue);
 		}
 
-		public static Color FromHue(double hue)
+		public static RgbColor FromHue(double hue)
 		{
 			if (hue.IsNaN())
 			{
@@ -133,29 +133,29 @@ namespace ArtEvolver.Rendering
 			switch (sector)
 			{
 				case 0:
-					return new Color(High, rising, Low);
+					return new RgbColor(High, rising, Low);
 
 				case 1:
-					return new Color(falling, High, Low);
+					return new RgbColor(falling, High, Low);
 
 				case 2:
-					return new Color(Low, High, rising);
+					return new RgbColor(Low, High, rising);
 
 				case 3:
-					return new Color(Low, falling, High);
+					return new RgbColor(Low, falling, High);
 
 				case 4:
-					return new Color(rising, Low, High);
+					return new RgbColor(rising, Low, High);
 
 				case 5:
-					return new Color(High, Low, falling);
+					return new RgbColor(High, Low, falling);
 
 				default:
 					throw new IndexOutOfRangeException();
 			}
 		}
 
-		public static Color FromHsb(double hue, double saturation, double brightness)
+		public static RgbColor FromHsb(double hue, double saturation, double brightness)
 		{
 			if (saturation < 0 || saturation > 1)
 			{

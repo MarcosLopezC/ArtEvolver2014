@@ -7,6 +7,6 @@ namespace ArtEvolver.Rendering.Generators
 {
 	public interface IColorGenerator
 	{
-		Color Generate(double value);
+		RgbColor Generate(double value);
 	}
 }

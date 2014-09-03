@@ -8,7 +8,7 @@ namespace ArtEvolver.Rendering.Generators
 {
 	public class UniformGenerator : IColorGenerator
 	{
-		public Color UndefinedColor { get; set; }
+		public RgbColor UndefinedColor { get; set; }
 
 		public double HueScale { get; set; }
 
@@ -29,14 +29,14 @@ namespace ArtEvolver.Rendering.Generators
 			BrightnessScale = 1;
 		}
 
-		public Color Generate(double value)
+		public RgbColor Generate(double value)
 		{
 			if (value.IsNumber())
 			{
-				return Color.FromHsb(
-					MathUtility.Mod(HueOffset + HueScale * value, Color.MaxHue),
-					MathUtility.TriangularMod(SaturationOffset + SaturationScale * value, Color.MaxSaturation),
-					MathUtility.TriangularMod(BrightnessOffset + BrightnessScale * value, Color.MaxBrightness)
+				return RgbColor.FromHsb(
+					MathUtility.Mod(HueOffset + HueScale * value, RgbColor.MaxHue),
+					MathUtility.TriangularMod(SaturationOffset + SaturationScale * value, RgbColor.MaxSaturation),
+					MathUtility.TriangularMod(BrightnessOffset + BrightnessScale * value, RgbColor.MaxBrightness)
 				);
 			}
 			else
