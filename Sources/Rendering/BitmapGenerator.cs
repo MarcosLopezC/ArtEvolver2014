@@ -12,7 +12,7 @@ namespace ArtEvolver.Rendering
 {
 	public static class BitmapGenerator
 	{
-		public static Bitmap Generate(DataContainer data, IColorGenerator generator)
+		public static Bitmap Generate(DataSet data, IColorGenerator generator)
 		{
 			if (data == null)
 			{

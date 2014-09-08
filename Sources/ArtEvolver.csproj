@@ -62,7 +62,8 @@
     <Compile Include="Rendering\HsbColor.cs" />
     <Compile Include="Rendering\Region.cs" />
     <Compile Include="Rendering\RgbColor.cs" />
-    <Compile Include="VirtualMachine\DataContainer.cs" />
+    <Compile Include="VirtualMachine\DataSet.cs" />
+    <Compile Include="VirtualMachine\DataSet.Builder.cs" />
     <Compile Include="VirtualMachine\Operation.cs" />
     <Compile Include="VirtualMachine\Program.cs" />
     <Compile Include="VirtualMachine\Stack.cs" />
