@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ArtEvolver.Rendering
 {
-	public class Region
+	public struct Region
 	{
 		public double X { get; set; }
 		public double Y { get; set; }
@@ -21,7 +21,7 @@ namespace ArtEvolver.Rendering
 			}
 		}
 
-		public Region(double width, double height)
+		public Region(double width, double height) : this()
 		{
 			this.Width  = width;
 			this.Height = height;

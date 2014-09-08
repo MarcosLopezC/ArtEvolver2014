@@ -262,11 +262,6 @@ namespace ArtEvolver.VirtualMachine
 				throw new ArgumentNullException("container");
 			}
 
-			if (region == null)
-			{
-				throw new ArgumentNullException("region");
-			}
-
 			if (region.Width < 0)
 			{
 				throw new ArgumentOutOfRangeException("region.Width", "Region width must be greater than 1.");
