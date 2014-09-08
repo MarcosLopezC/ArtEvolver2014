@@ -12,16 +12,16 @@ namespace ArtEvolver.Rendering
 {
 	public static class BitmapGenerator
 	{
-		public static Bitmap Generate(DataContainer data, IColorGenerator converter)
+		public static Bitmap Generate(DataContainer data, IColorGenerator generator)
 		{
 			if (data == null)
 			{
 				throw new ArgumentNullException("data");
 			}
 
-			if (converter == null)
+			if (generator == null)
 			{
-				throw new ArgumentNullException("converter");
+				throw new ArgumentNullException("generator");
 			}
 
 			var bitmap = new Bitmap(data.Width, data.Height, PixelFormat.Format24bppRgb);
@@ -38,7 +38,7 @@ namespace ArtEvolver.Rendering
 
 			for (var i = 0; i < managedBytes.Length; i += 3)
 			{
-				var color = converter.Generate(data[dataIndex]);
+				var color = generator.Generate(data[dataIndex]);
 
 				managedBytes[i + 0] = color.Red;
 				managedBytes[i + 1] = color.Green;
