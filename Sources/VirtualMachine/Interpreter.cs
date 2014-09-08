@@ -250,49 +250,6 @@ namespace ArtEvolver.VirtualMachine
 			return accumulator;
 		}
 
-		public static void ComputeRegion(Program program, DataContainer container, Region region)
-		{
-			if (program == null)
-			{
-				throw new ArgumentNullException("program");
-			}
-
-			if (container == null)
-			{
-				throw new ArgumentNullException("container");
-			}
-
-			if (region.Width < 0)
-			{
-				throw new ArgumentOutOfRangeException("region.Width", "Region width must be greater than 1.");
-			}
-
-			if (region.Height < 0)
-			{
-				throw new ArgumentOutOfRangeException("region.Height", "Region height must be greater than 1."); 
-			}
-
-			var i = 0;
-
-			for (var y = 0; y < container.Height; y += 1)
-			{
-				var yRatio = (double)y / container.Height;
-
-				var yPosition = (yRatio * region.Height) + region.Y;
-
-				for (var x = 0; x < container.Width; x += 1)
-				{
-					var xRatio = (double)x / container.Width;
-
-					var xPosition = (xRatio * region.Width) + region.X;
-
-					container[i] = Execute(program, xPosition, yPosition);
-
-					i += 1;
-				}
-			}
-		}
-
 		private static bool IsTruthy(double value)
 		{
 			return value == FalsyValue ? false : true;
